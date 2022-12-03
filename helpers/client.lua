@@ -8,31 +8,15 @@ local _client = {}
 --
 -- @param c A client
 function _client.turn_off(c, current_tag)
-    if current_tag == nil then
-        current_tag = c.screen.selected_tag
-    end
-    local ctags = {}
-    for k, tag in pairs(c:tags()) do
-        if tag ~= current_tag then
-            table.insert(ctags, tag)
-        end
-    end
-    c:tags(ctags)
     c.sticky = false
+    c.hidden = true
 end
 
 --- Turn on passed client (add current tag to window's tags)
 --
 -- @param c A client
 function _client.turn_on(c)
-    local current_tag = c.screen.selected_tag
-    ctags = { current_tag }
-    for k, tag in pairs(c:tags()) do
-        if tag ~= current_tag then
-            table.insert(ctags, tag)
-        end
-    end
-    c:tags(ctags)
+    c.hidden = false
     c:raise()
     client.focus = c
 end
