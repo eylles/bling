@@ -30,7 +30,7 @@ end
 local function is_in_table(element, table)
     local res = false
     for _, value in pairs(table) do
-        if element:match(value) then
+        if element:find(value) then
             res = true
             break
         end
@@ -85,7 +85,8 @@ local function manage_clientspawn(c)
     if
         -- will search for "(parent_client.pid)" inside the parent_pid string
         ( tostring(parent_pid):find("("..tostring(parent_client.pid)..")") )
-        and check_swallow(parent_client.class, c.class)
+        and (check_swallow(parent_client.class, c.class) and
+            check_swallow(parent_client.name, c.name))
     then
         c:connect_signal("unmanage", function()
             if parent_client then
